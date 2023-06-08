@@ -1,0 +1,36 @@
+version: '3.7'
+
+
+
+services:
+  db:
+    build: ./mysql
+    image: mysql-ja
+    container_name: "mysqlcont"
+    environment:
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: docker
+      MYSQL_PORT: 3306
+      MYSQL_PASSWORD: pass
+      MYSQL_ROOT_PASSWORD: 1234
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql/initdb.d:/docker-entrypoint-initdb.d
+      - dbdata:/var/lib/mysql
+  chat:
+    build:
+      context: ./app
+      target: development
+    command: npx nodemon index.js
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./app:/srv/chat
+      - chat_node_modules:/srv/chat/node_modules
+    depends_on:
+      - db
+
+volumes:
+  chat_node_modules:
+  dbdata:

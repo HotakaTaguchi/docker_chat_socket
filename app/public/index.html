@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>チャット</title>
+  <style>
+    header{position: fixed; background: deepskyblue; top:0; left:0; width: 100%; padding: 10px;}
+    #inputmyname{display:none}
+    #chat{display:none}
+    #msglistscroll{overflow:auto;}
+    #msglist { list-style-type: none; margin: 0; padding: 0; }
+    #msglist li { white-space: pre-wrap; padding: 5px 10px; }
+    #msglist li:nth-child(odd) { background: #eee; }
+    #msglist { margin-bottom: 40px }
+    .msg-member {color:navy}
+    .msg-me {color:red}
+    .title  {font-weight:bold}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font: 17px Helvetica, Arial; margin:20px; padding: 50px 10px 50px 10px;}
+    main{display: flex; flex:1;}
+    #chat form { background: deepskyblue; padding: 3px; bottom: 0; left:0; width: 100%; position: fixed; padding:10px; }
+    #chat form textarea { border: 0; padding: 5px; width: 90%; margin-right: .5%; }
+    #chat form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+
+  </style>
+</head>
+<body>
+
+<header><h2>チャット</h2></header>
+
+<!-- STEP1. 接続中 -->
+<section id="nowconnecting">
+    ...サーバに接続中
+</section>
+<!-- /接続中 -->
+
+<!-- STEP2. 名前を入力 -->
+<section id="inputmyname">
+    <p>あなたの名前を入力してください</p>
+    <p id="log"></p>
+    <form id="frm-myname">
+      <input type="text" id="txt-myname">
+      <button>入室</button>
+    </form>
+</section>
+<!-- /名前を入力 -->
+
+<!-- STEP3. チャット開始 -->
+<section id="chat">
+  <!-- 発言ログ -->
+    <div id="msglistscroll">
+      <li id="msglist"></li>
+    </div>
+  <!-- 発言フォーム -->
+  <form id="frm-post">
+    <span id="myname"></span>&nbsp;<textarea type="text" id="msg"></textarea>
+    <button>送信</button>
+  </form>
+</section>
+<!-- /チャット本体 -->
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/util.js"></script>
+<script src="/js/app.js"></script>
+
+</body>
+</html>
